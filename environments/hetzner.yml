@@ -1,0 +1,22 @@
+name: hetzner
+variables:
+  - name: HYPOTHESIS_URL
+    value: https://dev.rejuve.bio:5051
+  - name: ANNOTATION_URL
+    value: https://dev.rejuve.bio:5050
+  - name: AUTH_URL
+    value: https://dev.rejuve.bio:5052
+  - name: ASSISTANT_URL
+    value: https://dev.rejuve.bio:5053
+  - name: ANNOTATION_WEBHOOK
+    value: https://dev.rejuve.bio:5050
+  - name: HYPOTHESIS_WEBHOOK
+    value: https://dev.rejuve.bio:5051
+  - name: GALAXY_URL
+    value: https://dev.rejuve.bio:9443
+  - name: BIOBLEND_URL
+    value: https://dev.rejuve.bio:8896
+  - secret: true
+    name: email
+  - secret: true
+    name: password

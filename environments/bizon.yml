@@ -1,0 +1,22 @@
+name: bizon
+variables:
+  - name: HYPOTHESIS_URL
+    value: http://100.67.47.42:5008
+  - name: ANNOTATION_URL
+    value: http://100.67.47.42:5004
+  - name: AUTH_URL
+    value: http://100.67.47.42:5002
+  - name: ASSISTANT_URL
+    value: http://100.67.47.42:5010
+  - name: ANNOTATION_WEBHOOK
+    value: ws://100.67.47.42:5004
+  - name: HYPOTHESIS_WEBHOOK
+    value: ws://100.67.47.42:5008
+  - name: GALAXY_URL
+    value: http://100.67.47.42:9094
+  - name: BIOBLEND_URL
+    value: http://100.67.47.42:7890
+  - secret: true
+    name: email
+  - secret: true
+    name: password

@@ -1,0 +1,58 @@
+opencollection: 1.0.0
+
+info:
+  name: Mozi
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+request:
+  scripts:
+    - type: before-request
+      code: |-
+        const currentRequestName = req.getName();
+
+        if (currentRequestName === 'login') {
+          return;  // Skip auth logic for auth request itself
+        }
+
+        // Check if token needs refresh
+        if (!bru.getEnvVar('access_token')) {
+          
+          // Call the auth request in this collection
+          const authResult = await bru.runRequest("auth/login");
+          
+          if (authResult.status === 200) {
+            const tokenData = authResult.data;
+            bru.setEnvVar('access_token', tokenData.access_token);
+          } else {
+            throw new Error('Auth failed');
+          }
+        }
+
+        // Set header for ALL requests in collection
+        req.setHeader('Authorization', `Bearer ${bru.getEnvVar('access_token')}`);
+    - type: after-response
+      code: |-
+        // Clear token on 401 Unauthorized (runs for ALL requests in collection)
+        if (res.getStatus() === 401) {
+          console.log("401 detected - clearing invalid token");
+
+          bru.removeEnvVar('access_token');
+          
+          console.log("Token cleared - next request will refresh");
+        }
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git

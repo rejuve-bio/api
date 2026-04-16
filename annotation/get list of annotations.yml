@@ -1,0 +1,138 @@
+info:
+  name: get list of annotations
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{ANNOTATION_URL}}/history"
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Response is an array", function () {
+          const body = res.getBody();
+          expect(body).to.be.an("array");
+        });
+
+        test("Required fields exist on all items", function () {
+          const body = res.getBody();
+          
+          body.forEach(a => {
+            expect(a).to.have.all.keys(
+              "annotation_id", "title", "node_count", "edge_count", 
+              "node_types", "created_at", "updated_at", "request", 
+              "species", "source", "status"
+            );
+          })
+        });
+
+        test("Field types are correct", function () {
+          const body = res.getBody();
+          
+          body.forEach(a => {
+            expect(a.annotation_id).to.be.a("string");
+            expect(a.title).to.be.a("string");
+            expect(a.node_count).to.satisfy(v => v === null || typeof v === "number");
+            expect(a.edge_count).to.satisfy(v => v === null || typeof v === "number");
+            expect(a.node_types).to.be.an("array");
+            expect(a.created_at).to.be.a("string");
+            expect(a.updated_at).to.be.a("string");
+            expect(a.request).to.be.an("object");
+            expect(a.species).to.be.a("string");
+            expect(a.source).to.be.an("array");
+            expect(a.status).to.be.a("string");
+          });
+        });
+
+        test("Status field has valid enum values", function () {
+          const body = res.getBody();
+          const validStatuses = ["PENDING", "FAILED", "COMPLETE"];
+          
+          body.forEach(a => {
+            expect(validStatuses).to.include(a.status);
+          });
+        });
+
+        test("Numeric fields are non-negative", function () {
+          const body = res.getBody();
+          
+          body.forEach(a => {
+            if (a.node_count !== null) {
+              expect(a.node_count).to.be.at.least(0);
+            }
+            if (a.edge_count !== null) {
+              expect(a.edge_count).to.be.at.least(0);
+            }
+          });
+        });
+
+        test("node_types array contains only strings", function () {
+          const body = res.getBody();
+          
+          body.forEach(a => {
+            a.node_types.forEach(type => {
+              expect(type).to.be.a("string");
+            });
+          });
+        });
+
+        test("source array contains only strings", function () {
+          const body = res.getBody();
+          
+          body.forEach(a => {
+            a.source.forEach(src => {
+              expect(src).to.be.a("string");
+            });
+          });
+        });
+
+        test("Timestamp fields are valid ISO 8601 dates", function () {
+          const body = res.getBody();
+          const iso8601Regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
+          
+          body.forEach(a => {
+            expect(a.created_at).to.match(iso8601Regex);
+            expect(a.updated_at).to.match(iso8601Regex);
+          });
+        });
+
+        test("annotation_id is non-empty", function () {
+          const body = res.getBody();
+          
+          body.forEach(a => {
+            expect(a.annotation_id).to.not.be.empty;
+          });
+        });
+
+        test("title is non-empty", function () {
+          const body = res.getBody();
+          
+          body.forEach(a => {
+            expect(a.title).to.not.be.empty;
+          });
+        });
+
+        test("request object exists and is an object", function () {
+          const body = res.getBody();
+          
+          body.forEach(a => {
+            expect(a.request).to.be.an("object");
+            expect(a.request).to.not.be.null;
+          });
+        });
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.responseTime
+      operator: lt
+      value: "5000"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

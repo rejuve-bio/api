@@ -1,0 +1,7 @@
+info:
+  name: galaxy
+  type: folder
+  seq: 4
+
+request:
+  auth: inherit

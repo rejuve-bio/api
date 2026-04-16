@@ -1,0 +1,63 @@
+info:
+  name: login
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{AUTH_URL}}/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "{{email}}",
+        "password": "{{password}}"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Response is an object", function () {
+          const body = res.getBody();
+          expect(body).to.be.an("object");
+        });
+
+        test("Required fields exist", function () {
+          const body = res.getBody();
+          expect(body).to.have.all.keys("access_token", "refresh_token");
+        });
+
+        test("Tokens are strings", function () {
+          const body = res.getBody();
+          expect(body.access_token).to.be.a("string");
+          expect(body.refresh_token).to.be.a("string");
+        });
+
+        test("Tokens are non-empty", function () {
+          const body = res.getBody();
+          expect(body.access_token).to.not.be.empty;
+          expect(body.refresh_token).to.not.be.empty;
+        });
+
+        test("Tokens look like valid JWTs", function () {
+          const body = res.getBody();
+          const jwtRegex = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
+          expect(body.access_token).to.match(jwtRegex);
+          expect(body.refresh_token).to.match(jwtRegex);
+        });
+
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.responseTime
+      operator: lt
+      value: "5000"

@@ -1,0 +1,131 @@
+{
+  "info": {
+    "type": "bruno-environment",
+    "exportedAt": "2026-04-16T07:13:55.465Z",
+    "exportedUsing": "Bruno/v3.2.2"
+  },
+  "environments": [
+    {
+      "name": "bizon",
+      "variables": [
+        {
+          "name": "HYPOTHESIS_URL",
+          "value": "http://100.67.47.42:5008",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "ANNOTATION_URL",
+          "value": "http://100.67.47.42:5004",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "AUTH_URL",
+          "value": "http://100.67.47.42:5002",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "ASSISTANT_URL",
+          "value": "http://100.67.47.42:5010",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "ANNOTATION_WEBHOOK",
+          "value": "ws://100.67.47.42:5004",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "HYPOTHESIS_WEBHOOK",
+          "value": "ws://100.67.47.42:5008",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "GALAXY_URL",
+          "value": "http://100.67.47.42:9094",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "BIOBLEND_URL",
+          "value": "http://100.67.47.42:7890",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        }
+      ]
+    },
+    {
+      "name": "hetzner",
+      "variables": [
+        {
+          "name": "HYPOTHESIS_URL",
+          "value": "https://dev.rejuve.bio:5051",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "ANNOTATION_URL",
+          "value": "https://dev.rejuve.bio:5050",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "AUTH_URL",
+          "value": "https://dev.rejuve.bio:5052",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "ASSISTANT_URL",
+          "value": "https://dev.rejuve.bio:5053",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "ANNOTATION_WEBHOOK",
+          "value": "https://dev.rejuve.bio:5050",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "HYPOTHESIS_WEBHOOK",
+          "value": "https://dev.rejuve.bio:5051",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "GALAXY_URL",
+          "value": "https://dev.rejuve.bio:9443",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "BIOBLEND_URL",
+          "value": "https://dev.rejuve.bio:8896",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "version": "1",
+  "name": "Mozi",
+  "type": "collection",
+  "ignore": [".git", "node_modules"]
+}
