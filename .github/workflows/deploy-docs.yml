@@ -4,7 +4,6 @@ on:
   push:
     branches: [main]
     paths:
-      - 'openapi.yaml'
       - 'docs/**'
 
 permissions:
@@ -27,7 +26,6 @@ jobs:
         run: |
           mkdir site
           cp -r docs/* site/
-          cp openapi.yaml site/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
