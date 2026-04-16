@@ -3,8 +3,6 @@ name: Deploy API Docs
 on:
   push:
     branches: [main]
-    paths:
-      - 'docs/**'
 
 permissions:
   contents: read
@@ -16,21 +14,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      - uses: actions/configure-pages@v4
 
       - name: Prepare site
         run: |
           mkdir site
           cp -r docs/* site/
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Debug output (IMPORTANT)
+        run: |
+          echo "---- SITE CONTENT ----"
+          ls -R site
+
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: site
 
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v4
